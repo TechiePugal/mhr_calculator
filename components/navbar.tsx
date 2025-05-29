@@ -21,6 +21,10 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
+import Logo from "./mhrlogo.png"
+
+
 
 const navigationItems = [
   { id: "dashboard", label: "Dashboard", icon: Home, href: "/dashboard" },
@@ -67,91 +71,94 @@ export default function Navbar({ title = "Machine Hour Rate Calculator", current
   return (
     <>
       {/* Desktop Navbar */}
-      <nav className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo and Title */}
-            <div className="flex items-center space-x-4">
-              <Link href="/dashboard" className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
-                  <Calculator className="w-5 h-5 text-white" />
-                </div>
-                <div className="hidden sm:block">
-                  <h1 className="text-lg font-semibold text-gray-900">{title}</h1>
-                  {machineName && <p className="text-xs text-gray-500">Working on: {machineName}</p>}
-                </div>
-              </Link>
-            </div>
+<nav className="bg-blue-800 shadow-sm sticky top-0 z-50">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex justify-between items-center h-16">
+      
+      {/* Logo and Title */}
+      <div className="flex items-center space-x-2">
+        <Link href="/dashboard" className="flex items-center space-x-2">
+          <div className="flex items-center justify-center p-1 sm:p-2 lg:p-3">
+            <Image
+              src={Logo}
+              alt="Logo"
+              className="w-[88px] h-[88px] sm:w-24 sm:h-24 lg:w-28 lg:h-28 object-contain transition-all duration-300"
+            />
+          </div>
 
-            {/* Progress Indicator */}
-            {currentStep && totalSteps && (
-              <div className="hidden md:flex items-center space-x-3">
-                <div className="text-sm text-gray-600">
-                  Step {currentStep} of {totalSteps}
-                </div>
-                <div className="w-32 bg-gray-200 rounded-full h-2">
-                  <div
-                    className="bg-gradient-to-r from-blue-600 to-indigo-600 h-2 rounded-full transition-all duration-300"
-                    style={{ width: `${(currentStep / totalSteps) * 100}%` }}
-                  ></div>
-                </div>
-                <Badge variant="secondary" className="text-xs">
-                  {Math.round((currentStep / totalSteps) * 100)}%
-                </Badge>
-              </div>
+          <div className="hidden sm:block">
+            <h1 className="text-lg sm:text-xl font-bold text-yellow-400 tracking-wide">
+              {title}
+            </h1>
+            {machineName && (
+              <p className="text-xs text-blue-700">Working on: {machineName}</p>
             )}
-
-            {/* Desktop Actions */}
-            {/* <div className="hidden md:flex items-center space-x-4">
-              <Button variant="outline" onClick={handleLogout} className="text-sm">
-                <LogOut className="w-4 h-4 mr-2" />
-                Logout
-              </Button>
-            </div> */}
-
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="sm">
-                    <Menu className="w-5 h-5" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="right" className="w-80">
-                  <MobileNavigation
-                    navigationItems={navigationItems}
-                    pathname={pathname}
-                    onLogout={handleLogout}
-                    onClose={() => setMobileMenuOpen(false)}
-                    machineName={machineName}
-                  />
-                </SheetContent>
-              </Sheet>
-            </div>
           </div>
-        </div>
+        </Link>
+      </div>
 
-        {/* Mobile Progress Bar */}
-        {currentStep && totalSteps && (
-          <div className="md:hidden px-4 pb-3">
-            <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
-              <span>
-                Step {currentStep} of {totalSteps}
-              </span>
-              <span>{Math.round((currentStep / totalSteps) * 100)}%</span>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
-              <div
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 h-2 rounded-full transition-all duration-300"
-                style={{ width: `${(currentStep / totalSteps) * 100}%` }}
-              ></div>
-            </div>
-          </div>
-        )}
-      </nav>
+      {/* Progress Indicator */}
+{currentStep && totalSteps && (
+  <div className="hidden md:flex items-center space-x-3">
+    <div className="text-sm text-yellow-400">
+      Step {currentStep} of {totalSteps}
+    </div>
+    <div className="w-32 bg-gray-200 rounded-full h-2">
+      <div
+        className="bg-gradient-to-r from-blue-600 to-indigo-600 h-2 rounded-full transition-all duration-300"
+        style={{ width: `${(currentStep / totalSteps) * 100}%` }}
+      ></div>
+    </div>
+    <Badge variant="secondary" className="text-xs text-gray-800">
+      {Math.round((currentStep / totalSteps) * 100)}%
+    </Badge>
+  </div>
+)}
+
+
+      {/* Mobile Menu Button */}
+      <div className="md:hidden">
+        <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="sm" className="p-2">
+              <Menu className="w-10 h-10" /> {/* Custom large menu icon for mobile */}
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="w-80">
+            <MobileNavigation
+              navigationItems={navigationItems}
+              pathname={pathname}
+              onLogout={handleLogout}
+              onClose={() => setMobileMenuOpen(false)}
+              machineName={machineName}
+            />
+          </SheetContent>
+        </Sheet>
+      </div>
+    </div>
+  </div>
+
+  {/* Mobile Progress Bar */}
+{currentStep && totalSteps && (
+  <div className="md:hidden px-4 pb-3">
+    <div className="flex items-center justify-between text-sm text-yellow-400 mb-2">
+      <span>Step {currentStep} of {totalSteps}</span>
+      <span>{Math.round((currentStep / totalSteps) * 100)}%</span>
+    </div>
+    <div className="w-full bg-gray-200 rounded-full h-2">
+      <div
+        className="bg-gradient-to-r from-blue-600 to-indigo-600 text-gray-800 h-2 rounded-full transition-all duration-300"
+        style={{ width: `${(currentStep / totalSteps) * 100}%` }}
+      ></div>
+    </div>
+  </div>
+)}
+
+</nav>
+
 
       {/* Desktop Sidebar */}
-      <div className="hidden md:block fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-white border-r border-gray-200 overflow-y-auto">
+     <div className="bg-blue-500 hidden md:block fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-gray-50 border-r border-gray-300 overflow-y-auto">
         <DesktopNavigation
   navigationItems={navigationItems}
   pathname={pathname}
@@ -166,7 +173,7 @@ export default function Navbar({ title = "Machine Hour Rate Calculator", current
 
 function DesktopNavigation({ navigationItems, pathname, machineName, onLogout }: any) {
   return (
-    <div className="hidden md:flex flex-col fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-white border-r border-gray-200 overflow-y-auto justify-between">
+    <div className="hidden bg-blue-800 md:flex flex-col fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-white border-r border-gray-200 overflow-y-auto justify-between">
       <div className="flex flex-col h-full p-4 space-y-6">
         {/* Current Machine Info */}
         {machineName && (
@@ -177,7 +184,7 @@ function DesktopNavigation({ navigationItems, pathname, machineName, onLogout }:
         )}
 
         {/* Navigation Sections */}
-        <div className="flex-1 space-y-6 overflow-y-auto">
+        <div className="flex-1 mt-6 space-y-6 overflow-y-auto">
           {/* Main Navigation */}
           <div>
             <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Main</h3>
