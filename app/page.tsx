@@ -152,8 +152,8 @@ export default function LoginPage() {
     className="text-blue-500 hover:underline"
   >
     Kannan Amirthalingam
-  </a>
-  | Developed by{" "}
+  </a><br></br>
+  Developed by{" "}
   <a
     href="https://www.linkedin.com/in/techiepugal-in-090135272/"
     target="_blank"
