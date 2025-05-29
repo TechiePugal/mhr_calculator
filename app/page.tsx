@@ -142,9 +142,18 @@ export default function LoginPage() {
           </CardContent>
         </Card>
 
-        <div className="text-center mt-6 text-sm text-gray-500">
+<div className="text-center mt-6 text-sm text-gray-500">
   © 2025 Machine Hour Rate Calculator. All rights reserved. <br />
-  Developed by{" "}
+   Architected by{" "}
+  <a
+    href="https://www.kannanamirthalingam.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-blue-500 hover:underline"
+  >
+    Kannan Amirthalingam
+  </a>
+  | Developed by{" "}
   <a
     href="https://www.linkedin.com/in/techiepugal-in-090135272/"
     target="_blank"
@@ -152,8 +161,9 @@ export default function LoginPage() {
     className="text-blue-500 hover:underline"
   >
     Pugalenthi G
-  </a>
+  </a>{" "}
 </div>
+
 
       </div>
     </div>
