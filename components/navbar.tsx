@@ -117,24 +117,25 @@ export default function Navbar({ title = "Machine Hour Rate Calculator", current
 
 
       {/* Mobile Menu Button */}
-      <div className="md:hidden">
-        <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="sm" className="p-2">
-              <Menu className="w-10 h-10" /> {/* Custom large menu icon for mobile */}
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="right" className="w-80">
-            <MobileNavigation
-              navigationItems={navigationItems}
-              pathname={pathname}
-              onLogout={handleLogout}
-              onClose={() => setMobileMenuOpen(false)}
-              machineName={machineName}
-            />
-          </SheetContent>
-        </Sheet>
-      </div>
+<div className="md:hidden">
+  <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+    <SheetTrigger asChild>
+      <Button variant="ghost" size="sm" className="p-2">
+        <Menu className="w-20 h-20 text-yellow-400" /> {/* Twice as large yellow menu icon */}
+      </Button>
+    </SheetTrigger>
+    <SheetContent side="right" className="w-80">
+      <MobileNavigation
+        navigationItems={navigationItems}
+        pathname={pathname}
+        onLogout={handleLogout}
+        onClose={() => setMobileMenuOpen(false)}
+        machineName={machineName}
+      />
+    </SheetContent>
+  </Sheet>
+</div>
+
     </div>
   </div>
 
