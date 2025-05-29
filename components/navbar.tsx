@@ -102,12 +102,12 @@ export default function Navbar({ title = "Machine Hour Rate Calculator", current
             )}
 
             {/* Desktop Actions */}
-            <div className="hidden md:flex items-center space-x-4">
+            {/* <div className="hidden md:flex items-center space-x-4">
               <Button variant="outline" onClick={handleLogout} className="text-sm">
                 <LogOut className="w-4 h-4 mr-2" />
                 Logout
               </Button>
-            </div>
+            </div> */}
 
             {/* Mobile Menu Button */}
             <div className="md:hidden">
@@ -152,88 +152,131 @@ export default function Navbar({ title = "Machine Hour Rate Calculator", current
 
       {/* Desktop Sidebar */}
       <div className="hidden md:block fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-white border-r border-gray-200 overflow-y-auto">
-        <DesktopNavigation navigationItems={navigationItems} pathname={pathname} machineName={machineName} />
+        <DesktopNavigation
+  navigationItems={navigationItems}
+  pathname={pathname}
+  machineName={machineName}
+  onLogout={handleLogout} // <-- pass logout handler here
+/>
+
       </div>
     </>
   )
 }
 
-function DesktopNavigation({ navigationItems, pathname, machineName }: any) {
+function DesktopNavigation({ navigationItems, pathname, machineName, onLogout }: any) {
   return (
-    <div className="p-4 space-y-6">
-      {/* Current Machine Info */}
-      {machineName && (
-        <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
-          <p className="text-xs font-medium text-blue-900 mb-1">Current Machine</p>
-          <p className="text-sm text-blue-700 font-medium">{machineName}</p>
-        </div>
-      )}
-
-      {/* Navigation Sections */}
-      <div className="space-y-6">
-        {/* Main Navigation */}
-        <div>
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Main</h3>
-          <div className="space-y-1">
-            {navigationItems.slice(0, 2).map((item: any) => {
-              const Icon = item.icon
-              const isActive = pathname === item.href
-              return (
-                <Link key={item.id} href={item.href}>
-                  <div
-                    className={cn(
-                      "flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors",
-                      isActive ? "bg-blue-100 text-blue-700 border border-blue-200" : "text-gray-700 hover:bg-gray-100",
-                    )}
-                  >
-                    <Icon className="w-4 h-4 mr-3" />
-                    {item.label}
-                    {isActive && <ChevronRight className="w-4 h-4 ml-auto" />}
-                  </div>
-                </Link>
-              )
-            })}
+    <div className="hidden md:flex flex-col fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-white border-r border-gray-200 overflow-y-auto justify-between">
+      <div className="flex flex-col h-full p-4 space-y-6">
+        {/* Current Machine Info */}
+        {machineName && (
+          <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
+            <p className="text-xs font-medium text-blue-900 mb-1">Current Machine</p>
+            <p className="text-sm text-blue-700 font-medium">{machineName}</p>
           </div>
-        </div>
+        )}
 
-        {/* Calculation Steps */}
-        <div>
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Calculation Steps</h3>
-          <div className="space-y-1">
-            {navigationItems.slice(2).map((item: any) => {
-              const Icon = item.icon
-              const isActive = pathname === item.href
-              return (
-                <Link key={item.id} href={item.href}>
-                  <div
-                    className={cn(
-                      "flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors",
-                      isActive ? "bg-blue-100 text-blue-700 border border-blue-200" : "text-gray-700 hover:bg-gray-100",
-                    )}
-                  >
-                    <div className="flex items-center mr-3">
-                      <div
-                        className={cn(
-                          "w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold mr-2",
-                          isActive ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-600",
-                        )}
-                      >
-                        {item.step}
-                      </div>
-                      <Icon className="w-4 h-4" />
+        {/* Navigation Sections */}
+        <div className="flex-1 space-y-6 overflow-y-auto">
+          {/* Main Navigation */}
+          <div>
+            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Main</h3>
+            <div className="space-y-1">
+              {navigationItems.slice(0, 2).map((item: any) => {
+                const Icon = item.icon
+                const isActive = pathname === item.href
+                return (
+                  <Link key={item.id} href={item.href}>
+                    <div
+                      className={cn(
+                        "flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors",
+                        isActive ? "bg-blue-100 text-blue-700 border border-blue-200" : "text-gray-700 hover:bg-gray-100",
+                      )}
+                    >
+                      <Icon className="w-4 h-4 mr-3" />
+                      {item.label}
+                      {isActive && <ChevronRight className="w-4 h-4 ml-auto" />}
                     </div>
-                    <span className="flex-1">{item.label}</span>
-                    {isActive && <ChevronRight className="w-4 h-4" />}
-                  </div>
-                </Link>
-              )
-            })}
+                  </Link>
+                )
+              })}
+            </div>
           </div>
+
+          {/* Calculation Steps */}
+          <div>
+            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Calculation Steps</h3>
+            <div className="space-y-1">
+              {navigationItems.slice(2).map((item: any) => {
+                const Icon = item.icon
+                const isActive = pathname === item.href
+                return (
+                  <Link key={item.id} href={item.href}>
+                    <div
+                      className={cn(
+                        "flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors",
+                        isActive ? "bg-blue-100 text-blue-700 border border-blue-200" : "text-gray-700 hover:bg-gray-100",
+                      )}
+                    >
+                      <div className="flex items-center mr-3">
+                        <div
+                          className={cn(
+                            "w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold mr-2",
+                            isActive ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-600",
+                          )}
+                        >
+                          {item.step}
+                        </div>
+                        <Icon className="w-4 h-4" />
+                      </div>
+                      <span className="flex-1">{item.label}</span>
+                      {isActive && <ChevronRight className="w-4 h-4" />}
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Footer - Added above logout */}
+        <footer className="text-center mt-4 pt-4 text-[10px] text-gray-500 px-4 leading-relaxed border-t border-gray-200">
+      © 2025 MHR Calculator. <br/> All rights reserved.
+          <br />
+          Architected by{" "}
+          <a
+            href="https://www.kannanamirthalingam.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline"
+          >
+            Kannan
+          </a>
+          <br />
+          Developed by{" "}
+          <a
+            href="https://www.linkedin.com/in/techiepugal-in-090135272/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline"
+          >
+            Pugal
+          </a>
+        </footer>
+
+        {/* Logout Button at bottom */}
+        <div className="pt-4 border-t border-gray-200">
+          <Button variant="outline" onClick={onLogout} className="w-full text-sm flex items-center justify-center">
+            <LogOut className="w-4 h-4 mr-2" />
+            Logout
+          </Button>
         </div>
       </div>
     </div>
   )
 }
+
+
 
 function MobileNavigation({ navigationItems, pathname, onLogout, onClose, machineName }: any) {
   return (
@@ -313,12 +356,37 @@ function MobileNavigation({ navigationItems, pathname, onLogout, onClose, machin
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-gray-200">
-        <Button variant="outline" onClick={onLogout} className="w-full">
+      <div className="p-4 border-t border-gray-200 space-y-3 text-center text-[10px] text-gray-500 leading-relaxed">
+        <div>
+          © 2025 MHR Calculator. <br/> All rights reserved.
+          <br />
+          Architected by{" "}
+          <a
+            href="https://www.kannanamirthalingam.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline"
+          >
+            Kannan
+          </a>
+          <br />
+          Developed by{" "}
+          <a
+            href="https://www.linkedin.com/in/techiepugal-in-090135272/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline"
+          >
+            Pugal
+          </a>
+        </div>
+
+        <Button variant="outline" onClick={onLogout} className="w-full flex items-center justify-center">
           <LogOut className="w-4 h-4 mr-2" />
           Logout
         </Button>
       </div>
+      
     </div>
   )
 }
